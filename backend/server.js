@@ -1,7 +1,7 @@
+require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-require("dotenv").config();
 
 const app = express();
 
@@ -39,6 +39,14 @@ app.get("/add", async (req, res) => {
 app.get("/packages", async (req, res) => {
   const data = await Package.find();
   res.json(data);
+});
+
+app.post("/packages", async (req, res) => {
+  const { title, price } = req.body;
+
+  const newPackage = await Package.create({ title, price });
+
+  res.json(newPackage);
 });
 
 // 🚀 Start server
