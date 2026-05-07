@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Admin() {
+  const [activeTab, setActiveTab] = useState("packages");
   const [packages, setPackages] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [formData, setFormData] = useState({ title: "", price: "", image: "", description: "", duration: "" });
   const [imageFile, setImageFile] = useState(null);
   const [editingId, setEditingId] = useState(null);
@@ -17,6 +19,7 @@ function Admin() {
       navigate("/");
     } else {
       fetchPackages();
+      fetchBookings();
     }
   }, [navigate, user]);
 
@@ -27,6 +30,18 @@ function Admin() {
       setPackages(data);
     } catch (err) {
       console.error("Failed to fetch packages", err);
+    }
+  };
+
+  const fetchBookings = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/bookings", {
+        headers: { "Authorization": `Bearer ${token}` }
+      });
+      const data = await res.json();
+      setBookings(data);
+    } catch (err) {
+      console.error("Failed to fetch bookings", err);
     }
   };
 
@@ -89,6 +104,24 @@ function Admin() {
     window.scrollTo(0, 0); // Scroll up to the form
   };
 
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      const res = await fetch(`http://localhost:5000/api/bookings/${id}`, {
+        method: "PUT",
+        headers: { 
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        fetchBookings(); // Refresh the list
+      }
+    } catch (err) {
+      console.error("Failed to update status", err);
+    }
+  };
+
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this package?")) return;
 
@@ -119,7 +152,17 @@ function Admin() {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-3 gap-8 items-start">
+        <div className="flex gap-4 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
+          <button onClick={() => setActiveTab("packages")} className={`font-bold px-6 py-2 rounded-full transition ${activeTab === "packages" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300"}`}>
+            Manage Packages
+          </button>
+          <button onClick={() => setActiveTab("bookings")} className={`font-bold px-6 py-2 rounded-full transition ${activeTab === "bookings" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300"}`}>
+            Customer Bookings
+          </button>
+        </div>
+
+        {activeTab === "packages" ? (
+          <div className="grid lg:grid-cols-3 gap-8 items-start">
           
           {/* ADD / EDIT FORM */}
           <div className="lg:col-span-1 bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 sticky top-28">
@@ -181,6 +224,51 @@ function Admin() {
           </div>
 
         </div>
+        ) : (
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-gray-50 dark:bg-gray-900/50 text-gray-500 dark:text-gray-400 text-sm uppercase tracking-wider">
+                    <th className="p-4 font-bold">Customer</th>
+                    <th className="p-4 font-bold">Contact</th>
+                    <th className="p-4 font-bold">Package</th>
+                    <th className="p-4 font-bold">Date & Guests</th>
+                    <th className="p-4 font-bold">Total Price</th>
+                    <th className="p-4 font-bold">Status</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
+                  {bookings.map((b) => (
+                    <tr key={b._id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition">
+                      <td className="p-4 text-gray-900 dark:text-white font-medium">{b.userName}</td>
+                      <td className="p-4 text-gray-600 dark:text-gray-300 text-sm">{b.userEmail}<br/>{b.phone}</td>
+                      <td className="p-4 text-gray-900 dark:text-white font-medium">{b.packageName}</td>
+                      <td className="p-4 text-gray-600 dark:text-gray-300 text-sm">{new Date(b.travelDate).toLocaleDateString()}<br/>{b.guests} Guests</td>
+                      <td className="p-4 text-blue-600 dark:text-blue-400 font-bold">₹{b.totalPrice.toLocaleString("en-IN")}</td>
+                      <td className="p-4">
+                        <select 
+                          value={b.status} 
+                          onChange={(e) => handleStatusChange(b._id, e.target.value)}
+                          className={`text-xs font-bold px-3 py-1 rounded-full outline-none cursor-pointer appearance-none ${
+                            b.status === "Confirmed" ? "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400" : 
+                            b.status === "Cancelled" ? "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400" : 
+                            "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400"
+                          }`}
+                        >
+                          <option value="Pending">Pending</option>
+                          <option value="Confirmed">Confirmed</option>
+                          <option value="Cancelled">Cancelled</option>
+                        </select>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {bookings.length === 0 && <p className="text-center p-8 text-gray-500">No bookings found.</p>}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

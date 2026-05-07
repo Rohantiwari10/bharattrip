@@ -53,6 +53,21 @@ const packageSchema = new mongoose.Schema({
 
 const Package = mongoose.model("Package", packageSchema);
 
+// Booking Schema
+const bookingSchema = new mongoose.Schema({
+  packageId: String,
+  packageName: String,
+  userName: String,
+  userEmail: String,
+  phone: String,
+  travelDate: String,
+  guests: Number,
+  totalPrice: Number,
+  status: { type: String, default: "Pending" }, // Pending, Confirmed, Cancelled
+  createdAt: { type: Date, default: Date.now }
+});
+const Booking = mongoose.model("Booking", bookingSchema);
+
 // Test
 app.get("/", (req, res) => {
   res.send("Backend working");
@@ -116,6 +131,51 @@ app.delete("/packages/:id", verifyAdmin, async (req, res) => {
     res.json({ message: "Package deleted successfully" });
   } catch (error) {
     res.status(500).json({ message: "Error deleting package", error: error.message });
+  }
+});
+
+// --- BOOKING ROUTES ---
+
+// Create a new booking (Open to Users and Guests)
+app.post("/api/bookings", async (req, res) => {
+  try {
+    const newBooking = await Booking.create(req.body);
+    res.status(201).json({ message: "Booking successful!", booking: newBooking });
+  } catch (error) {
+    res.status(500).json({ message: "Error creating booking", error: error.message });
+  }
+});
+
+// Get bookings for a specific user (My Bookings Dashboard)
+app.get("/api/bookings/user/:email", async (req, res) => {
+  try {
+    // Find all bookings matching this email, sorted by newest first
+    const userBookings = await Booking.find({ userEmail: req.params.email }).sort({ createdAt: -1 });
+    res.json(userBookings);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching bookings", error: error.message });
+  }
+});
+
+// Get ALL bookings (Admin Panel Only)
+app.get("/api/bookings", verifyAdmin, async (req, res) => {
+  try {
+    // Fetch all bookings across the whole site, newest first
+    const allBookings = await Booking.find().sort({ createdAt: -1 });
+    res.json(allBookings);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching all bookings", error: error.message });
+  }
+});
+
+// Update booking status (Admin Panel Only)
+app.put("/api/bookings/:id", verifyAdmin, async (req, res) => {
+  try {
+    const { status } = req.body;
+    const updatedBooking = await Booking.findByIdAndUpdate(req.params.id, { status }, { new: true });
+    res.json(updatedBooking);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating booking status", error: error.message });
   }
 });
 
