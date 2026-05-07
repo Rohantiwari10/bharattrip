@@ -16,7 +16,8 @@ function Dashboard() {
 
   const fetchMyBookings = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/bookings/user/${user.email}`);
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/bookings/user/${user.email}`);
       const data = await res.json();
       setBookings(data);
     } catch (err) {

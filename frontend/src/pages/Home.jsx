@@ -12,7 +12,8 @@ function Home() {
 
   const fetchPackages = async () => {
     try {
-      const res = await fetch("http://localhost:5000/packages");
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/packages`);
       const data = await res.json();
       setPackages(data);
     } catch (err) {

@@ -25,7 +25,8 @@ function Admin() {
 
   const fetchPackages = async () => {
     try {
-      const res = await fetch("http://localhost:5000/packages");
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/packages`);
       const data = await res.json();
       setPackages(data);
     } catch (err) {
@@ -35,7 +36,8 @@ function Admin() {
 
   const fetchBookings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/bookings", {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/bookings`, {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
@@ -52,9 +54,10 @@ function Admin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
     const url = editingId 
-      ? `http://localhost:5000/packages/${editingId}`
-      : "http://localhost:5000/packages";
+      ? `${API_URL}/packages/${editingId}`
+      : `${API_URL}/packages`;
       
     const method = editingId ? "PUT" : "POST";
 
@@ -106,7 +109,8 @@ function Admin() {
 
   const handleStatusChange = async (id, newStatus) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/bookings/${id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/api/bookings/${id}`, {
         method: "PUT",
         headers: { 
           "Content-Type": "application/json",
@@ -126,7 +130,8 @@ function Admin() {
     if (!window.confirm("Are you sure you want to delete this package?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/packages/${id}`, {
+      const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+      const res = await fetch(`${API_URL}/packages/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });
