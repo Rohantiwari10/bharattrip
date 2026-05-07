@@ -47,10 +47,9 @@ function Layout() {
           </h1>
           <div className="hidden md:flex gap-8 text-base font-semibold items-center">
             <button onClick={() => navigate("/")} className="hover:text-blue-500 transition">Home</button>
-            <button onClick={() => navigate("/packages")} className="hover:text-blue-500 transition">Destinations</button>
             <button onClick={() => navigate("/packages")} className="hover:text-blue-500 transition">Packages</button>
-            <button className="hover:text-blue-500 transition">About Us</button>
-            <button className="hover:text-blue-500 transition">Contact</button>
+            <button onClick={() => navigate("/about")} className="hover:text-blue-500 transition">About Us</button>
+            <button onClick={() => navigate("/contact")} className="hover:text-blue-500 transition">Contact</button>
           </div>
           <div className="hidden md:flex items-center gap-6">
             {/* DARK MODE TOGGLE */}
@@ -95,8 +94,8 @@ function Layout() {
             <ul className="text-gray-400 space-y-2">
               <li><button onClick={() => navigate("/")} className="hover:text-white transition">Home</button></li>
               <li><button onClick={() => navigate("/packages")} className="hover:text-white transition">Tour Packages</button></li>
-              <li><button className="hover:text-white transition">About Us</button></li>
-              <li><button className="hover:text-white transition">Contact Us</button></li>
+              <li><button onClick={() => navigate("/about")} className="hover:text-white transition">About Us</button></li>
+              <li><button onClick={() => navigate("/contact")} className="hover:text-white transition">Contact Us</button></li>
             </ul>
           </div>
           <div>
