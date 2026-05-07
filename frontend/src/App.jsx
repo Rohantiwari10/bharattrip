@@ -5,6 +5,7 @@ import PackageDetails from "./pages/PackageDetails";
 import Layout from "./pages/Layout";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import Admin from "./pages/Admin";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/packages/:id" element={<PackageDetails />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/admin" element={<Admin />} />
       </Route>
     </Routes>
   );

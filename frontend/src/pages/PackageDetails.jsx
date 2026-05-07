@@ -58,13 +58,13 @@ function PackageDetails() {
           <section>
             <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Tour Overview</h2>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
-              Embark on an unforgettable journey to {pkg.title}. This premium travel package is meticulously crafted to offer you the perfect blend of breathtaking landscapes, vibrant local culture, and ultimate comfort. Whether you are looking for a peaceful retreat or a thrilling adventure, our expert guides and handpicked accommodations ensure a seamless and enriching experience.
+              {pkg.description || `Embark on an unforgettable journey to ${pkg.title}. This premium travel package is meticulously crafted to offer you the perfect blend of breathtaking landscapes, vibrant local culture, and ultimate comfort. Whether you are looking for a peaceful retreat or a thrilling adventure, our expert guides and handpicked accommodations ensure a seamless and enriching experience.`}
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
               <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
                 <span className="text-sm font-bold text-gray-900 dark:text-white">Duration</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">5 Days / 4 Nights</span>
+                <span className="text-xs text-gray-500 dark:text-gray-400">{pkg.duration || "5 Days / 4 Nights"}</span>
               </div>
               <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>

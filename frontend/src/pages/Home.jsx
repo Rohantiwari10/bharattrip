@@ -118,7 +118,7 @@ function Home() {
                   
                   <div className="flex items-center text-gray-600 dark:text-gray-400 text-sm mb-6 mt-auto">
                     <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    5 Days / 4 Nights
+                    {p.duration || "5 Days / 4 Nights"}
                   </div>
 
                   <div className="border-t border-gray-100 dark:border-gray-700 pt-4 flex justify-between items-center">

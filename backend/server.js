@@ -5,11 +5,28 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+
+// --- IMAGE UPLOAD CONFIGURATION ---
+// Ensure uploads directory exists
+if (!fs.existsSync("./uploads")) {
+  fs.mkdirSync("./uploads");
+}
+// Serve the uploads folder statically
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => cb(null, "uploads/"),
+  filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname))
+});
+const upload = multer({ storage });
 
 // MongoDB connect
 mongoose.connect(process.env.MONGO_URI)
@@ -29,7 +46,9 @@ const User = mongoose.model("User", userSchema);
 const packageSchema = new mongoose.Schema({
   title: String,
   price: Number,
-  image: String
+  image: String,
+  description: String,
+  duration: String
 });
 
 const Package = mongoose.model("Package", packageSchema);
@@ -43,6 +62,61 @@ app.get("/", (req, res) => {
 app.get("/packages", async (req, res) => {
   const data = await Package.find();
   res.json(data);
+});
+
+// --- ADMIN PROTECTED ROUTES ---
+const verifyAdmin = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) return res.status(401).json({ message: "No token provided" });
+  
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || "bharattrip_secret_key");
+    if (decoded.role !== "admin") return res.status(403).json({ message: "Not authorized. Admins only." });
+    req.user = decoded;
+    next();
+  } catch (err) {
+    res.status(401).json({ message: "Invalid token" });
+  }
+};
+
+// Create a new package
+app.post("/packages", verifyAdmin, upload.single("image"), async (req, res) => {
+  try {
+    const packageData = { ...req.body };
+    // If a file was uploaded, generate its public URL
+    if (req.file) {
+      packageData.image = `http://localhost:5000/uploads/${req.file.filename}`;
+    }
+    const newPackage = await Package.create(packageData);
+    res.status(201).json(newPackage);
+  } catch (error) {
+    res.status(500).json({ message: "Error creating package", error: error.message });
+  }
+});
+
+// Update a package
+app.put("/packages/:id", verifyAdmin, upload.single("image"), async (req, res) => {
+  try {
+    const packageData = { ...req.body };
+    // Only update the image if a new file was uploaded
+    if (req.file) {
+      packageData.image = `http://localhost:5000/uploads/${req.file.filename}`;
+    }
+    const updatedPackage = await Package.findByIdAndUpdate(req.params.id, packageData, { new: true });
+    res.json(updatedPackage);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating package", error: error.message });
+  }
+});
+
+// Delete a package
+app.delete("/packages/:id", verifyAdmin, async (req, res) => {
+  try {
+    await Package.findByIdAndDelete(req.params.id);
+    res.json({ message: "Package deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting package", error: error.message });
+  }
 });
 
 // Seed real data
