@@ -1,13 +1,25 @@
 import { useEffect, useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
+import LoginModal from "./LoginModal";
 
 function Layout() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
     // Check local storage or system preference on initial load
     return localStorage.getItem("theme") === "dark" || 
       (!("theme" in localStorage) && window.matchMedia("(prefers-color-scheme: dark)").matches);
   });
+
+  // Check if user is logged in
+  const user = JSON.parse(localStorage.getItem("user"));
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.reload(); // Refresh to clear state
+  };
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -70,12 +82,32 @@ function Layout() {
                 <svg className="w-5 h-5 md:w-6 md:h-6" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
               )}
             </button>
-            <button className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-blue-700 transition shadow-md">
-              Login / Signup
-            </button>
+            
+            {user ? (
+              <div className="flex items-center gap-4">
+                {/* Show Admin Panel only to Admins */}
+                {user.role === "admin" && (
+                  <button onClick={() => navigate("/admin")} className="hidden lg:block text-sm font-bold hover:text-blue-500 transition">Admin Panel</button>
+                )}
+                {/* Show My Bookings only to normal registered users */}
+                {user.role === "user" && (
+                  <button onClick={() => navigate("/dashboard")} className="hidden lg:block text-sm font-bold hover:text-blue-500 transition">My Bookings</button>
+                )}
+                <button onClick={handleLogout} className="bg-red-500 text-white px-5 py-2 rounded-full font-bold hover:bg-red-600 transition shadow-md text-sm">
+                  Logout ({user.name.split(" ")[0]})
+                </button>
+              </div>
+            ) : (
+              <button onClick={() => setIsAuthModalOpen(true)} className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-blue-700 transition shadow-md">
+                Login / Signup
+              </button>
+            )}
           </div>
         </div>
       </nav>
+
+      {/* AUTHENTICATION MODAL */}
+      <LoginModal isOpen={isAuthModalOpen} onClose={() => setIsAuthModalOpen(false)} />
 
       {/* DYNAMIC PAGE CONTENT INJECTED HERE */}
       <main className="flex-grow">
