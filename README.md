@@ -2,6 +2,8 @@
 
 ![BharatTrip Banner](https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop)
 
+**🚀 Live Demo:** [https://bharattrip.vercel.app/](https://bharattrip.vercel.app/)
+
 > **BharatTrip** is a modern, full-stack travel booking application built with the **MERN** stack. It allows travelers to discover handcrafted tour packages across India, make instant inquiries using a "Book Now - Pay Later" flow, and manage their trips. 
 
 This project features a complete **User Dashboard** for customers and an **Admin Panel** for agency owners to manage inventory, upload images, and update customer booking statuses.
@@ -90,12 +92,12 @@ npm run dev
 
 ## 🌐 Deployment
 
-This project is fully ready to be deployed:
-- **Frontend:** Designed to be hosted on Vercel or Netlify.
-- **Backend:** Designed to be hosted on Render or Railway.
-- **Database:** Hosted on MongoDB Atlas.
+This project is currently deployed and live at: **[https://bharattrip.vercel.app/](https://bharattrip.vercel.app/)**
 
-*Make sure to update the `VITE_API_URL` environment variable in your frontend deployment dashboard to point to your live backend URL!*
+Deployment Architecture:
+- **Frontend:** Hosted on Vercel.
+- **Backend:** Hosted on Render.
+- **Database:** Hosted on MongoDB Atlas.
 
 ---
 
