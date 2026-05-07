@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 function Home() {
   const [packages, setPackages] = useState([]);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [searchDestination, setSearchDestination] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +23,14 @@ function Home() {
       setPackages(data);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchDestination) {
+      navigate(`/packages?search=${searchDestination}`);
+    } else {
+      navigate(`/packages`);
     }
   };
 
@@ -77,7 +86,7 @@ function Home() {
           <div className="bg-white p-3 md:p-4 rounded-2xl md:rounded-full shadow-2xl flex flex-col md:flex-row gap-4 items-center justify-between text-gray-800 w-full max-w-4xl mx-auto">
             <div className="flex flex-col text-left px-4 w-full md:w-1/3 border-b md:border-b-0 md:border-r border-gray-200 pb-2 md:pb-0">
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Destination</label>
-              <select defaultValue="" className="outline-none py-1 text-base font-semibold bg-transparent w-full text-gray-900 cursor-pointer">
+              <select value={searchDestination} onChange={(e) => setSearchDestination(e.target.value)} className="outline-none py-1 text-base font-semibold bg-transparent w-full text-gray-900 cursor-pointer">
                 <option value="" disabled>Where to?</option>
                 <option value="goa">Goa</option>
                 <option value="jaipur">Jaipur</option>
@@ -95,7 +104,7 @@ function Home() {
               <label className="text-xs font-bold text-gray-500 uppercase tracking-wider mb-1">Guests</label>
               <input type="number" placeholder="Add guests" min="1" className="outline-none py-1 text-base font-semibold bg-transparent w-full text-gray-900 placeholder-gray-400" />
             </div>
-            <button className="w-full md:w-auto bg-blue-600 text-white px-8 py-3.5 md:py-4 rounded-xl md:rounded-full font-bold hover:bg-blue-700 transition shadow-lg shrink-0">
+            <button onClick={handleSearch} className="w-full md:w-auto bg-blue-600 text-white px-8 py-3.5 md:py-4 rounded-xl md:rounded-full font-bold hover:bg-blue-700 transition shadow-lg shrink-0">
               Search
             </button>
           </div>
@@ -193,6 +202,20 @@ function Home() {
             </div>
             <h3 className="text-2xl font-bold text-gray-900">24/7 Support</h3>
             <p className="text-gray-500 mt-4 leading-relaxed">Our travel experts are always here to help you, anytime, anywhere.</p>
+          </div>
+        </div>
+      </div>
+
+      {/* NEWSLETTER SECTION */}
+      <div className="bg-blue-600 py-20 text-white text-center px-6">
+        <div className="max-w-4xl mx-auto">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Get Special Offers & Travel Inspiration</h2>
+          <p className="text-blue-100 text-lg mb-10 max-w-2xl mx-auto">Subscribe to our newsletter and receive exclusive deals, travel guides, and early access to our premium packages directly in your inbox.</p>
+          <div className="flex flex-col md:flex-row gap-4 justify-center max-w-2xl mx-auto">
+            <input type="email" placeholder="Enter your email address" className="px-6 py-4 rounded-full w-full text-gray-900 font-medium outline-none focus:ring-4 focus:ring-blue-400" />
+            <button className="bg-gray-900 text-white font-bold px-8 py-4 rounded-full hover:bg-black transition-colors shadow-lg shrink-0">
+              Subscribe Now
+            </button>
           </div>
         </div>
       </div>
