@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 function PackageDetails() {
   const { id } = useParams();
   const [pkg, setPkg] = useState(null);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [guests, setGuests] = useState(2);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchPackage();
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const fetchPackage = async () => {
@@ -17,22 +23,194 @@ function PackageDetails() {
     setPkg(found);
   };
 
-  if (!pkg) return <h2>Loading...</h2>;
+  if (!pkg) return (
+    <div className="h-screen flex flex-col items-center justify-center bg-gray-50">
+      <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+      <p className="mt-4 text-gray-500 font-medium tracking-wide">Loading your dream destination...</p>
+    </div>
+  );
 
   return (
-    <div className="p-8">
-      <img src={pkg.image} className="w-full h-80 object-cover" />
+    <div className="bg-gray-50 min-h-screen font-sans selection:bg-blue-500 selection:text-white">
+      {/* NAVBAR */}
+      <nav className={`fixed w-full z-50 transition-all duration-300 ${isScrolled ? "bg-white shadow-lg py-4 text-gray-900" : "bg-transparent py-6 text-white"}`}>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 flex justify-between items-center">
+          <h1 className={`text-3xl font-extrabold cursor-pointer tracking-wider transition ${isScrolled ? "text-gray-900" : "text-white"}`} onClick={() => navigate("/")}>
+            BHARAT<span className={isScrolled ? "text-blue-600" : "text-blue-400"}>TRIP</span>
+          </h1>
+          <div className="hidden md:flex gap-8 text-base font-semibold items-center">
+            <button onClick={() => navigate("/")} className="hover:text-blue-500 transition">Home</button>
+            <button onClick={() => navigate("/packages")} className="hover:text-blue-500 transition">Destinations</button>
+            <button onClick={() => navigate("/packages")} className="hover:text-blue-500 transition">Packages</button>
+          </div>
+          <div className="hidden md:block">
+            <button className="bg-blue-600 text-white px-6 py-2.5 rounded-full font-bold hover:bg-blue-700 transition shadow-md">
+              Login / Signup
+            </button>
+          </div>
+        </div>
+      </nav>
+    <div className="bg-gray-50 min-h-screen">
 
-      <h1 className="text-3xl font-bold mt-4">{pkg.title}</h1>
-      <p className="text-xl mt-2">₹{pkg.price}</p>
+      {/* HERO SECTION */}
+      <div className="relative h-[60vh] w-full bg-cover bg-center" style={{ backgroundImage: `url(${pkg.image})` }}>
+        <div className="absolute inset-0 bg-black/40"></div>
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-gray-900 to-transparent p-12 text-white">
+          <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-end">
+            <div>
+              <div className="flex items-center gap-3 mb-3">
+                <span className="bg-blue-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Top Rated</span>
+                <span className="bg-white/20 backdrop-blur-md text-xs font-bold px-3 py-1 rounded-full flex items-center"><svg className="w-3 h-3 mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg> 4.8 (124 Reviews)</span>
+              </div>
+              <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg mb-2">{pkg.title}</h1>
+              <p className="text-lg md:text-xl font-medium text-gray-200 flex items-center gap-2">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                India
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <p className="mt-4 text-gray-600">
-        This is a beautiful travel package. Enjoy your trip with full comfort.
-      </p>
+      {/* MAIN CONTENT */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
+        
+        {/* LEFT COLUMN - DETAILS */}
+        <div className="lg:col-span-2 space-y-12">
+          {/* Tour Overview */}
+          <section>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Tour Overview</h2>
+            <p className="text-gray-600 leading-relaxed text-lg">
+              Embark on an unforgettable journey to {pkg.title}. This premium travel package is meticulously crafted to offer you the perfect blend of breathtaking landscapes, vibrant local culture, and ultimate comfort. Whether you are looking for a peaceful retreat or a thrilling adventure, our expert guides and handpicked accommodations ensure a seamless and enriching experience.
+            </p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
+                <span className="text-sm font-bold text-gray-900">Duration</span>
+                <span className="text-xs text-gray-500">5 Days / 4 Nights</span>
+              </div>
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
+                <span className="text-sm font-bold text-gray-900">Group Size</span>
+                <span className="text-xs text-gray-500">Max 12 People</span>
+              </div>
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
+                <span className="text-sm font-bold text-gray-900">Languages</span>
+                <span className="text-xs text-gray-500">English, Hindi</span>
+              </div>
+              <div className="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div className="w-10 h-10 bg-blue-50 text-blue-600 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
+                <span className="text-sm font-bold text-gray-900">Hotel</span>
+                <span className="text-xs text-gray-500">4-Star Premium</span>
+              </div>
+            </div>
+          </section>
 
-      <button className="mt-6 bg-green-600 text-white px-6 py-3 rounded">
-        Book Now
-      </button>
+          {/* What's Included */}
+          <section>
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-6">What's Included</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="flex items-center text-gray-700 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Premium 4-Star Accommodation</div>
+              <div className="flex items-center text-gray-700 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Daily Buffet Breakfast & Dinner</div>
+              <div className="flex items-center text-gray-700 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Airport Pick-up & Drop-off</div>
+              <div className="flex items-center text-gray-700 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Professional English-speaking Guide</div>
+              <div className="flex items-center text-gray-400 line-through"><svg className="w-6 h-6 text-red-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Flights and Airfare</div>
+              <div className="flex items-center text-gray-400 line-through"><svg className="w-6 h-6 text-red-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Personal Expenses & Tips</div>
+            </div>
+          </section>
+
+          {/* Itinerary */}
+          <section>
+            <h2 className="text-2xl font-extrabold text-gray-900 mb-6">Sample Itinerary</h2>
+            <div className="border-l-2 border-blue-200 ml-3 space-y-8 pb-4">
+              <div className="relative pl-8">
+                <div className="absolute -left-[11px] top-1 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow"></div>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">Day 1: Arrival & Welcome</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">Arrive at the destination. Our representative will pick you up from the airport and transfer you to your premium hotel. Spend the evening relaxing and enjoying the welcome dinner.</p>
+              </div>
+              <div className="relative pl-8">
+                <div className="absolute -left-[11px] top-1 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow"></div>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">Day 2: City Sightseeing Tour</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">After breakfast, embark on a full-day guided tour covering major cultural and historical landmarks. Evening free for local shopping and leisure.</p>
+              </div>
+              <div className="relative pl-8">
+                <div className="absolute -left-[11px] top-1 w-5 h-5 bg-blue-600 rounded-full border-4 border-white shadow"></div>
+                <h3 className="text-lg font-bold text-gray-900 mb-1">Day 3: Nature & Adventure</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">Head out for an excursion to nearby natural wonders. Participate in optional adventure activities or simply soak in the breathtaking views.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        {/* RIGHT COLUMN - BOOKING WIDGET */}
+        <div className="lg:col-span-1">
+          <div className="bg-white p-8 rounded-2xl shadow-xl border border-gray-100 sticky top-32">
+            <div className="mb-6">
+              <span className="text-3xl font-extrabold text-gray-900">₹{pkg.price.toLocaleString("en-IN")}</span>
+              <span className="text-gray-500 font-medium"> / person</span>
+            </div>
+            
+            <div className="space-y-4 mb-8">
+              <div className="border border-gray-300 rounded-xl overflow-hidden flex flex-col">
+                <div className="flex flex-col p-3 border-b border-gray-300 hover:bg-gray-50 transition">
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">Travel Date</label>
+                  <input type="date" className="outline-none py-1 text-gray-900 font-bold cursor-pointer bg-transparent" />
+                </div>
+                <div className="flex flex-col p-3 hover:bg-gray-50 transition">
+                  <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">Guests</label>
+                  <select className="outline-none py-1 text-gray-900 font-bold cursor-pointer bg-transparent" value={guests} onChange={(e) => setGuests(parseInt(e.target.value))}>
+                    {[1, 2, 3, 4, 5, 6].map(num => (
+                      <option key={num} value={num}>{num} {num === 1 ? 'Guest' : 'Guests'}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center mb-6 text-lg font-bold text-gray-900">
+              <span>Total Price</span>
+              <span className="text-blue-600 text-2xl">₹{(pkg.price * guests).toLocaleString("en-IN")}</span>
+            </div>
+
+            <button className="w-full bg-blue-600 text-white font-extrabold py-4 rounded-full hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+              Book Now
+            </button>
+            <p className="text-center text-xs text-gray-500 mt-4 font-medium">You won't be charged yet</p>
+          </div>
+        </div>
+
+      </div>
+
+      {/* FOOTER */}
+      <footer className="bg-gray-900 text-white pt-16 pb-8">
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+          <div className="md:col-span-2">
+            <h2 className="text-3xl font-extrabold mb-4">BHARAT<span className="text-blue-500">TRIP</span></h2>
+            <p className="text-gray-400 max-w-md">Your trusted partner for exploring the incredible landscapes, vibrant cultures, and hidden gems of India.</p>
+          </div>
+          <div>
+            <h4 className="text-lg font-bold mb-4">Quick Links</h4>
+            <ul className="text-gray-400 space-y-2">
+              <li><button onClick={() => navigate("/")} className="hover:text-white transition">Home</button></li>
+              <li><button onClick={() => navigate("/packages")} className="hover:text-white transition">Tour Packages</button></li>
+              <li><button className="hover:text-white transition">About Us</button></li>
+              <li><button className="hover:text-white transition">Contact Us</button></li>
+            </ul>
+          </div>
+          <div>
+            <h4 className="text-lg font-bold mb-4">Contact Info</h4>
+            <ul className="text-gray-400 space-y-2">
+              <li>📞 +91 98765 43210</li>
+              <li>✉️ info@bharattrip.com</li>
+              <li>📍 New Delhi, India</li>
+            </ul>
+          </div>
+        </div>
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+          <p>© {new Date().getFullYear()} BharatTrip. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 }
