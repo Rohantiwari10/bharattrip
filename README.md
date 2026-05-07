@@ -1,6 +1,6 @@
 # 🇮🇳 BharatTrip - The Ultimate Travel Agency Platform
 
-![BharatTrip Banner](https://images.unsplash.com/photo-1524492412937-b28074a5d7da?q=80&w=2071&auto=format&fit=crop)
+![BharatTrip Banner](./screenshot.png)
 
 **🚀 Live Demo:** [https://bharattrip.vercel.app/](https://bharattrip.vercel.app/)
 
