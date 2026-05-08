@@ -153,11 +153,11 @@ function Admin() {
         <div className="mb-12 flex justify-between items-end">
           <div>
             <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-2">Admin Dashboard</h2>
-            <h1 className="text-4xl font-extrabold text-gray-900 dark:text-white">Manage Packages</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">Manage Packages</h1>
           </div>
         </div>
 
-        <div className="flex gap-4 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
+        <div className="flex flex-wrap gap-4 mb-8 border-b border-gray-200 dark:border-gray-700 pb-4">
           <button onClick={() => setActiveTab("packages")} className={`font-bold px-6 py-2 rounded-full transition ${activeTab === "packages" ? "bg-blue-600 text-white" : "bg-gray-200 text-gray-700 dark:bg-gray-800 dark:text-gray-300 hover:bg-gray-300"}`}>
             Manage Packages
           </button>

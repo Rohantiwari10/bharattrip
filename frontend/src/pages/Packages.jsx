@@ -43,7 +43,7 @@ function Packages() {
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-2">Destinations</h2>
-          <h3 className="text-4xl font-extrabold text-gray-900 dark:text-white">
+          <h3 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">
             {searchQuery 
               ? `Search Results for "${searchQuery.charAt(0).toUpperCase() + searchQuery.slice(1)}"` 
               : "All Tour Packages"}

@@ -98,14 +98,14 @@ function PackageDetails() {
       {/* HERO SECTION */}
       <div className="relative h-[60vh] w-full bg-cover bg-center" style={{ backgroundImage: `url(${pkg.image})` }}>
         <div className="absolute inset-0 bg-black/40"></div>
-        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-gray-900 to-transparent p-12 text-white">
+        <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-gray-900 to-transparent p-6 md:p-12 text-white">
           <div className="max-w-7xl mx-auto px-6 md:px-12 flex flex-col md:flex-row justify-between items-end">
             <div>
               <div className="flex items-center gap-3 mb-3">
                 <span className="bg-blue-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">Top Rated</span>
                 <span className="bg-white/20 backdrop-blur-md text-xs font-bold px-3 py-1 rounded-full flex items-center"><svg className="w-3 h-3 mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path></svg> 4.8 (124 Reviews)</span>
               </div>
-              <h1 className="text-4xl md:text-6xl font-extrabold drop-shadow-lg mb-2">{pkg.title}</h1>
+              <h1 className="text-2xl md:text-5xl lg:text-6xl font-extrabold drop-shadow-lg mb-2">{pkg.title}</h1>
               <p className="text-lg md:text-xl font-medium text-gray-200 flex items-center gap-2">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
                 India
@@ -116,33 +116,33 @@ function PackageDetails() {
       </div>
 
       {/* MAIN CONTENT */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
+it is       <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
         
         {/* LEFT COLUMN - DETAILS */}
-        <div className="lg:col-span-2 space-y-12">
+        <div className="lg:col-span-2 space-y-10 md:space-y-12">
           {/* Tour Overview */}
           <section>
-            <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Tour Overview</h2>
+            <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900 dark:text-white mb-6">Tour Overview</h2>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed text-lg">
               {pkg.description || `Embark on an unforgettable journey to ${pkg.title}. This premium travel package is meticulously crafted to offer you the perfect blend of breathtaking landscapes, vibrant local culture, and ultimate comfort. Whether you are looking for a peaceful retreat or a thrilling adventure, our expert guides and handpicked accommodations ensure a seamless and enriching experience.`}
             </p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 mt-8">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center hover:-translate-y-1 transition-transform">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></div>
                 <span className="text-sm font-bold text-gray-900 dark:text-white">Duration</span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">{pkg.duration || "5 Days / 4 Nights"}</span>
               </div>
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center hover:-translate-y-1 transition-transform">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg></div>
                 <span className="text-sm font-bold text-gray-900 dark:text-white">Group Size</span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">Max 12 People</span>
               </div>
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center hover:-translate-y-1 transition-transform">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg></div>
                 <span className="text-sm font-bold text-gray-900 dark:text-white">Languages</span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">English, Hindi</span>
               </div>
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 flex flex-col items-center text-center hover:-translate-y-1 transition-transform">
                 <div className="w-10 h-10 bg-blue-50 dark:bg-blue-900/50 text-blue-600 dark:text-blue-400 rounded-full flex items-center justify-center mb-2"><svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg></div>
                 <span className="text-sm font-bold text-gray-900 dark:text-white">Hotel</span>
                 <span className="text-xs text-gray-500 dark:text-gray-400">4-Star Premium</span>
@@ -152,20 +152,20 @@ function PackageDetails() {
 
           {/* What's Included */}
           <section>
-            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-6">What's Included</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Premium 4-Star Accommodation</div>
-              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Daily Buffet Breakfast & Dinner</div>
-              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Airport Pick-up & Drop-off</div>
-              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium"><svg className="w-6 h-6 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Professional English-speaking Guide</div>
-              <div className="flex items-center text-gray-400 dark:text-gray-500 line-through"><svg className="w-6 h-6 text-red-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Flights and Airfare</div>
-              <div className="flex items-center text-gray-400 dark:text-gray-500 line-through"><svg className="w-6 h-6 text-red-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Personal Expenses & Tips</div>
+            <h2 className="text-xl md:text-2xl font-extrabold text-gray-900 dark:text-white mb-4 md:mb-6">What's Included</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base"><svg className="w-5 h-5 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Premium 4-Star Accommodation</div>
+              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base"><svg className="w-5 h-5 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Daily Buffet Breakfast & Dinner</div>
+              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base"><svg className="w-5 h-5 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Airport Pick-up & Drop-off</div>
+              <div className="flex items-center text-gray-700 dark:text-gray-300 font-medium text-sm md:text-base"><svg className="w-5 h-5 text-green-500 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path></svg> Professional English-speaking Guide</div>
+              <div className="flex items-center text-gray-400 dark:text-gray-500 line-through text-sm md:text-base"><svg className="w-5 h-5 text-red-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Flights and Airfare</div>
+              <div className="flex items-center text-gray-400 dark:text-gray-500 line-through text-sm md:text-base"><svg className="w-5 h-5 text-red-400 mr-3 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path></svg> Personal Expenses & Tips</div>
             </div>
           </section>
 
           {/* Itinerary */}
           <section>
-            <h2 className="text-2xl font-extrabold text-gray-900 dark:text-white mb-6">Sample Itinerary</h2>
+            <h2 className="text-xl md:text-2xl font-extrabold text-gray-900 dark:text-white mb-4 md:mb-6">Sample Itinerary</h2>
             <div className="border-l-2 border-blue-200 ml-3 space-y-8 pb-4">
               <div className="relative pl-8">
                 <div className="absolute -left-[11px] top-1 w-5 h-5 bg-blue-600 rounded-full border-4 border-white dark:border-gray-900 shadow"></div>
@@ -188,19 +188,19 @@ function PackageDetails() {
 
         {/* RIGHT COLUMN - BOOKING WIDGET */}
         <div className="lg:col-span-1">
-          <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 sticky top-32 transition-colors duration-300">
+          <div className="bg-white dark:bg-gray-800 p-6 md:p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 sticky top-32 transition-colors duration-300">
             <div className="mb-6">
-              <span className="text-3xl font-extrabold text-gray-900 dark:text-white">₹{pkg.price.toLocaleString("en-IN")}</span>
+              <span className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">₹{pkg.price.toLocaleString("en-IN")}</span>
               <span className="text-gray-500 dark:text-gray-400 font-medium"> / person</span>
             </div>
             
             <div className="space-y-4 mb-8">
-              <div className="border border-gray-300 dark:border-gray-600 rounded-xl overflow-hidden flex flex-col">
-                <div className="flex flex-col p-3 border-b border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+              <div className="border border-gray-200 dark:border-gray-600 rounded-2xl overflow-hidden flex flex-col">
+                <div className="flex flex-col p-3 md:p-4 border-b border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">Travel Date</label>
                   <input type="date" value={travelDate} onChange={(e) => setTravelDate(e.target.value)} min={new Date().toISOString().split("T")[0]} className="outline-none py-1 text-gray-900 dark:text-white font-bold cursor-pointer bg-transparent dark:[color-scheme:dark]" />
                 </div>
-                <div className="flex flex-col p-3 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                <div className="flex flex-col p-3 md:p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition">
                   <label className="text-xs font-bold text-gray-500 uppercase tracking-wide">Guests</label>
                   <select className="outline-none py-1 text-gray-900 dark:text-white font-bold cursor-pointer bg-transparent" value={guests} onChange={(e) => setGuests(parseInt(e.target.value))}>
                     {[1, 2, 3, 4, 5, 6].map(num => (
@@ -211,9 +211,9 @@ function PackageDetails() {
               </div>
             </div>
 
-            <div className="flex justify-between items-center mb-6 text-lg font-bold text-gray-900 dark:text-white">
+            <div className="flex justify-between items-center mb-6 text-lg md:text-xl font-bold text-gray-900 dark:text-white">
               <span>Total Price</span>
-              <span className="text-blue-600 dark:text-blue-400 text-2xl">₹{(pkg.price * guests).toLocaleString("en-IN")}</span>
+              <span className="text-blue-600 dark:text-blue-400 text-2xl md:text-3xl">₹{(pkg.price * guests).toLocaleString("en-IN")}</span>
             </div>
 
             <button onClick={handleBookNowClick} className="w-full bg-blue-600 text-white font-extrabold py-4 rounded-full hover:bg-blue-700 transition shadow-lg shadow-blue-200 dark:shadow-none">

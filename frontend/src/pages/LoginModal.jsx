@@ -54,8 +54,8 @@ export default function LoginModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity">
-      <div className="bg-white dark:bg-gray-900 w-full max-w-md p-8 rounded-2xl shadow-2xl relative border border-gray-100 dark:border-gray-800">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity px-4">
+      <div className="bg-white dark:bg-gray-900 w-full max-w-md p-6 md:p-8 rounded-2xl shadow-2xl relative border border-gray-100 dark:border-gray-800">
         
         {/* Close Button */}
         <button onClick={onClose} className="absolute top-4 right-4 text-gray-400 hover:text-gray-900 dark:hover:text-white transition">

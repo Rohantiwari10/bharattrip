@@ -6,7 +6,7 @@ function About() {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-2">Our Story</h2>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6">About BHARAT<span className="text-blue-500">TRIP</span></h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white mb-6">About BHARAT<span className="text-blue-500">TRIP</span></h1>
         </div>
         
         <div className="bg-white dark:bg-gray-800 p-8 md:p-12 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 text-gray-700 dark:text-gray-300 leading-relaxed space-y-6 text-lg">

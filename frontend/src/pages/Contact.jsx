@@ -6,7 +6,7 @@ function Contact() {
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-blue-600 font-bold tracking-widest uppercase text-sm mb-2">Get in touch</h2>
-          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white">Contact Us</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold text-gray-900 dark:text-white">Contact Us</h1>
         </div>
 
         <div className="grid md:grid-cols-5 gap-12 items-start">
