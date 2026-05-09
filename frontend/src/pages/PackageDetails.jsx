@@ -116,7 +116,7 @@ function PackageDetails() {
       </div>
 
       {/* MAIN CONTENT */}
-it is       <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 py-12 md:py-16 grid grid-cols-1 lg:grid-cols-3 gap-12">
         
         {/* LEFT COLUMN - DETAILS */}
         <div className="lg:col-span-2 space-y-10 md:space-y-12">

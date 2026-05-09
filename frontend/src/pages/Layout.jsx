@@ -23,6 +23,13 @@ function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Silently wake up the backend as soon as any page on the website loads
+  useEffect(() => {
+    const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
+    // Fire and forget request to wake up Render/Vercel server in the background
+    fetch(`${API_URL}/packages`).catch(() => {});
+  }, []);
+
   // Start transparent only on pages with large hero images (Home and Package Details)
   const isHeroPage = location.pathname === "/" || (location.pathname.startsWith("/packages/") && location.pathname !== "/packages");
 

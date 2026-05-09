@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 
 function Packages() {
   const [packages, setPackages] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -11,6 +12,7 @@ function Packages() {
   }, [location.search]);
 
   const fetchPackages = async () => {
+    setLoading(true); // Start spinner
     try {
       const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
       const res = await fetch(`${API_URL}/packages`);
@@ -31,6 +33,8 @@ function Packages() {
       }
     } catch (err) {
       console.error("Failed to fetch packages. Is your backend running?", err);
+    } finally {
+      setLoading(false); // Stop spinner
     }
   };
 
@@ -50,7 +54,12 @@ function Packages() {
           </h3>
         </div>
 
-        {packages.length === 0 ? (
+        {loading ? (
+          <div className="flex flex-col items-center justify-center py-20">
+            <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <p className="mt-4 text-gray-500 dark:text-gray-400 font-medium tracking-wide">Waking up server and loading packages...</p>
+          </div>
+        ) : packages.length === 0 ? (
           <div className="text-center bg-white dark:bg-gray-800 p-12 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 max-w-2xl mx-auto mt-10 transition-colors duration-300">
             <h4 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">No packages found</h4>
             <p className="text-gray-500 dark:text-gray-400 mb-6">We couldn't find any tours matching your destination. Try exploring our other popular packages!</p>
